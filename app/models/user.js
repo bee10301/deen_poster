@@ -15,7 +15,15 @@ const oAuthTypes = ['github', 'twitter', 'google', 'linkedin'];
  */
 
 const UserSchema = new Schema({
+  position: { type: String, default: '未設定區域' },
+  level: { type: String, default: '未設定職位' },
+  twid: { type: String, default: 'A123456789' },
   name: { type: String, default: '' },
+  join_date: { type: Date, default: Date.now() },
+  leave_date: { type: Date, default: null },
+  money_acc: { type: String, default: '' },
+  money_10: { type: Number, default: '0' },
+  money_least: { type: Number, default: '0' },
   email: { type: String, default: '' },
   username: { type: String, default: '' },
   provider: { type: String, default: '' },

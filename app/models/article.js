@@ -24,9 +24,13 @@ const setTags = tags => {
  */
 
 const ArticleSchema = new Schema({
-  title: { type: String, default: '', trim: true, maxlength: 400 },
-  body: { type: String, default: '', trim: true, maxlength: 1000 },
-  user: { type: Schema.ObjectId, ref: 'User' },
+  /* title: { type: String, default: '', trim: true, maxlength: 400 }
+  createdAt: { type: Date, default: Date.now },
+  image: {
+    cdnUri: String,
+    files: []
+  }, */
+  //案件討論
   comments: [
     {
       body: { type: String, default: '', maxlength: 1000 },
@@ -34,12 +38,238 @@ const ArticleSchema = new Schema({
       createdAt: { type: Date, default: Date.now }
     }
   ],
+  //案件描述
+  body: { type: String, default: '', trim: true, maxlength: 1000 },
+  //標籤
   tags: { type: [], get: getTags, set: setTags },
-  image: {
-    cdnUri: String,
-    files: []
+  //創建人
+  user: { type: Schema.ObjectId, ref: 'User' },
+  //區域
+  position: String,
+  //案件流水號(日期)
+  uid: {
+    type: String,
+    required: true
   },
-  createdAt: { type: Date, default: Date.now }
+  //案件人名
+  case_name: {
+    type: String,
+    default: "未設定案名"
+  },
+  clear_date: {
+    type: Date,
+    default: () => new Date(+new Date() + 5 * 365 * 24 * 60 * 60 * 1000),
+    required: true
+  },
+  create_date: {
+    type: Date,
+    default: Date.now(),
+    required: true
+  },
+  helper_name: {
+    type: String,
+    default: "未設定禮助"
+  },
+  host_date: {
+    type: Date,
+    default: () => new Date(+new Date() + 5 * 364 * 24 * 60 * 60 * 1000),
+    required: true
+  },
+  host_name: {
+    type: String,
+    default: "未設定禮儀師"
+  },
+  host_sign: {
+    type: Boolean,
+    default: false
+  },
+  plan_money: {
+    type: Number,
+    default: 9876543210
+  },
+  object_item: {
+    接體: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    引魂: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    頭七: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    二七: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    三七: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    四七: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    五七: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    六七: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    滿七: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    功德法事: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 1000 },
+      person: { type: Array, default: [] },
+    },
+    洗穿化殮: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    洗穿化殮5K: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 1000 },
+      person: { type: Array, default: [] },
+    },
+    大體SPA入殮_單人: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 1000 },
+      person: { type: Array, default: [] },
+    },
+    大體SPA入殮_雙人: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    報殮3K: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    報殮4K: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 1000 },
+      person: { type: Array, default: [] },
+    },
+    抬棺2K: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    抬棺4K: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 1000 },
+      person: { type: Array, default: [] },
+    },
+    會場布置: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    告別式: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    靈車: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    返主: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    晉塔: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 500 },
+      person: { type: Array, default: [] },
+    },
+    土葬上山: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 1000 },
+      person: { type: Array, default: [] },
+    },
+    起掘遷葬: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 1000 },
+      person: { type: Array, default: [] },
+    },
+    起掘遷葬晉塔: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 1000 },
+      person: { type: Array, default: [] },
+    },
+    德誼VIP安靈室: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 100 },
+      person: { type: Array, default: [] },
+    },
+    職案獎金: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 1000 },
+      person: { type: Array, default: [] },
+    },
+    小孩出生死亡_未滿月: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 1000 },
+      person: { type: Array, default: [] },
+    },
+    小孩出生死亡_滿月: {
+      date: { type: Date, default: () => new Date(+new Date() + 10 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 2000 },
+      person: { type: Array, default: [] },
+    },
+
+  }
 });
 
 /**
@@ -53,7 +283,7 @@ ArticleSchema.path('body').required(true, 'Article body cannot be blank');
  * Pre-remove hook
  */
 
-ArticleSchema.pre('remove', function(next) {
+ArticleSchema.pre('remove', function (next) {
   // const imager = new Imager(imagerConfig, 'S3');
   // const files = this.image.files;
 
@@ -77,7 +307,7 @@ ArticleSchema.methods = {
    * @api private
    */
 
-  uploadAndSave: function(/*image*/) {
+  uploadAndSave: function (/*image*/) {
     const err = this.validateSync();
     if (err && err.toString()) throw new Error(err.toString());
     return this.save();
@@ -104,7 +334,7 @@ ArticleSchema.methods = {
    * @api private
    */
 
-  addComment: function(user, comment) {
+  addComment: function (user, comment) {
     this.comments.push({
       body: comment.body,
       user: user._id
@@ -128,7 +358,7 @@ ArticleSchema.methods = {
    * @api private
    */
 
-  removeComment: function(commentId) {
+  removeComment: function (commentId) {
     const index = this.comments.map(comment => comment.id).indexOf(commentId);
 
     if (~index) this.comments.splice(index, 1);
@@ -149,7 +379,7 @@ ArticleSchema.statics = {
    * @api private
    */
 
-  load: function(_id) {
+  load: function (_id) {
     return this.findOne({ _id })
       .populate('user', 'name email username')
       .populate('comments.user')
@@ -163,7 +393,7 @@ ArticleSchema.statics = {
    * @api private
    */
 
-  list: function(options) {
+  list: function (options) {
     const criteria = options.criteria || {};
     const page = options.page || 0;
     const limit = options.limit || 30;

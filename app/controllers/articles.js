@@ -43,7 +43,7 @@ exports.index = async(function*(req, res) {
   const count = yield Article.countDocuments();
 
   res.render('articles/index', {
-    title: 'Articles',
+    title: '案件區',
     articles: articles,
     page: page + 1,
     pages: Math.ceil(count / limit)
@@ -56,7 +56,7 @@ exports.index = async(function*(req, res) {
 
 exports.new = function(req, res) {
   res.render('articles/new', {
-    title: 'New Article',
+    title: '新建案件',
     article: new Article()
   });
 };
@@ -70,12 +70,12 @@ exports.create = async(function*(req, res) {
   article.user = req.user;
   try {
     yield article.uploadAndSave(req.file);
-    req.flash('success', 'Successfully created article!');
+    req.flash('success', '案件創建成功');
     res.redirect(`/articles/${article._id}`);
   } catch (err) {
     res.status(422).render('articles/new', {
-      title: article.title || 'New Article',
-      errors: [err.toString()],
+      title: article.title || '新建案件',
+      errors: [err.toString()+"---有欄位缺少"],
       article
     });
   }
@@ -87,7 +87,7 @@ exports.create = async(function*(req, res) {
 
 exports.edit = function(req, res) {
   res.render('articles/edit', {
-    title: 'Edit ' + req.article.title,
+    title: '編輯 ' + req.article.title,
     article: req.article
   });
 };
@@ -104,7 +104,7 @@ exports.update = async(function*(req, res) {
     res.redirect(`/articles/${article._id}`);
   } catch (err) {
     res.status(422).render('articles/edit', {
-      title: 'Edit ' + article.title,
+      title: '編輯 ' + article.title,
       errors: [err.toString()],
       article
     });
@@ -128,6 +128,6 @@ exports.show = function(req, res) {
 
 exports.destroy = async(function*(req, res) {
   yield req.article.remove();
-  req.flash('info', 'Deleted successfully');
+  req.flash('info', '刪除成功');
   res.redirect('/articles');
 });
