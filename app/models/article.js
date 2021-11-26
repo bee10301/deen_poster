@@ -22,7 +22,7 @@ const setTags = tags => {
 /**
  * Article Schema
  */
-
+// deen_case.uid = req.body.uid ? req.body.uid : date_cache.getUTCFullYear().toString() + "_" + date_cache.getUTCMonth().toString() + "_" + date_cache.getUTCDate().toString() + "_" + date_cache.getUTCHours().toString() + date_cache.getUTCMinutes().toString() + date_cache.getUTCSeconds().toString() + date_cache.getUTCMilliseconds().toString();
 const ArticleSchema = new Schema({
   /* title: { type: String, default: '', trim: true, maxlength: 400 }
   createdAt: { type: Date, default: Date.now },
@@ -49,6 +49,7 @@ const ArticleSchema = new Schema({
   //案件流水號(日期)
   uid: {
     type: String,
+    //default: new Date().getUTCFullYear().toString() + "_" + new Date().getUTCMonth().toString() + "_" + new Date().getUTCDate().toString() + "_" + new Date().getUTCHours().toString() + new Date().getUTCMinutes().toString() + new Date().getUTCSeconds().toString() + new Date().getUTCMilliseconds().toString(),
     required: true
   },
   //案件人名
@@ -276,8 +277,8 @@ const ArticleSchema = new Schema({
  * Validations
  */
 
-ArticleSchema.path('title').required(true, 'Article title cannot be blank');
-ArticleSchema.path('body').required(true, 'Article body cannot be blank');
+ArticleSchema.path('case_name').required(true, '案件名不能為空');
+//ArticleSchema.path('body').required(true, 'Article body cannot be blank');
 
 /**
  * Pre-remove hook
@@ -340,7 +341,7 @@ ArticleSchema.methods = {
       user: user._id
     });
 
-    if (!this.user.email) this.user.email = 'email@product.com';
+    if (!this.user.email) this.user.email = 'email@test.com';
 
     notify.comment({
       article: this,
@@ -362,7 +363,7 @@ ArticleSchema.methods = {
     const index = this.comments.map(comment => comment.id).indexOf(commentId);
 
     if (~index) this.comments.splice(index, 1);
-    else throw new Error('Comment not found');
+    else throw new Error('沒有討論串');
     return this.save();
   }
 };
