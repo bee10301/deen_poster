@@ -4,11 +4,11 @@ article.article
   p= article.body.slice(0, 400)
 
   .meta
-    span.text-muted= formatDate(article.createdAt)
+    span.text-muted= formatDate(article.create_date)
 
     - if (article.user)
       | &nbsp; - &nbsp;
-      span Author &nbsp;
+      span 創建者 &nbsp;
 
       - var name = article.user.name ? article.user.name : article.user.username
 
@@ -16,7 +16,7 @@ article.article
 
     - if (article.tags)
       | &nbsp; - &nbsp;
-      span Tags &nbsp;
+      span 標籤 &nbsp;
       each tag in article.tags.split(',').slice(0, 10)
         i.text-muted.fa.fa-tag &nbsp;
         a.tag(href="/tags/"+tag)= tag

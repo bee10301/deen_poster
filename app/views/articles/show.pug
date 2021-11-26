@@ -6,9 +6,32 @@ block main
 block content
   .row
     .col-md-8
-      p=article.body.slice(0, 1000)
       .meta
+        - if (article.uid)
+          - var name = article.uid ? article.uid : "未設定"
+          p 流水號 :&nbsp;
+            a(href="/uid/"+article.uid)= name
         - if (article.user)
+          - var name = article.user.name ? article.user.name : article.user.username
+          p 創建者 :&nbsp;
+            a(href="/users/"+article.user._id)= name
+        - if (article.create_date)
+          - var create_date = article.create_date ? article.create_date : "未設定"
+          p 創建日 :&nbsp;
+            a= create_date
+        - if (article.uid)
+          - var name = article.user.name ? article.user.name : article.user.username
+          p 創建者 :&nbsp;
+            a(href="/users/"+article.user._id)= name
+        - if (article.uid)
+          - var name = article.user.name ? article.user.name : article.user.username
+          p 創建者 :&nbsp;
+            a(href="/users/"+article.user._id)= name
+        - if (article.uid)
+          - var name = article.user.name ? article.user.name : article.user.username
+          p 創建者 :&nbsp;
+            a(href="/users/"+article.user._id)= name
+        - if (article.uid)
           - var name = article.user.name ? article.user.name : article.user.username
           p 創建者 :&nbsp;
             a(href="/users/"+article.user._id)= name
@@ -19,18 +42,19 @@ block content
               i.text-muted.fa.fa-tag &nbsp;
               a.tag(href="/tags/"+tag)= tag
               | &nbsp;&nbsp;
+        p=article.body.slice(0, 1000)
 
-        p.text-muted= formatDate(article.creat_date, "%b %d, %Y at %I:%M %p")
+        p.text-muted= formatDate(article.create_date, "%b %d, %Y at %I:%M %p")
 
     .col-md-4
       - if (!article.isNew && article.image && article.image.files && article.image.files.length)
         img(src=article.image.cdnUri + '/mini_' + article.image.files[0])
 
-  form(action="/articles/"+article.id, method="post", onsubmit="return confirm('確認執行 ?')")
-    input(type='hidden', name='_csrf', value=csrf_token)
-    a.btn.btn-outline-primary(href='/articles/'+article._id+'/edit', title="edit") 編輯
+  form(action="/articles/"+article.id, method="post" onsubmit="return confirm('確認執行 ?')")
+    input(type='hidden' name='_csrf', value=csrf_token)
+    a.btn.btn-outline-primary(href='/articles/'+article._id+'/edit' title="edit") 編輯
     | &nbsp;
-    input(type="hidden", name="_method", value="DELETE")
+    input(type="hidden" name="_method" value="DELETE")
     button.btn.btn-link.text-danger(type="submit") 刪除
 
   br

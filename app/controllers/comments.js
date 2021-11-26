@@ -13,7 +13,7 @@ const { wrap: async } = require('co');
 exports.load = function(req, res, next, id) {
   req.comment = req.article.comments.find(comment => comment.id === id);
 
-  if (!req.comment) return next(new Error('Comment not found'));
+  if (!req.comment) return next(new Error('找無此流言'));
   next();
 };
 
@@ -33,6 +33,6 @@ exports.create = async(function*(req, res) {
 
 exports.destroy = async(function*(req, res) {
   yield req.article.removeComment(req.params.commentId);
-  req.flash('info', 'Removed comment');
+  req.flash('info', '已刪除留言');
   res.redirect(`/articles/${req.article.id}`);
 });

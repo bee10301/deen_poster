@@ -17,7 +17,7 @@ const assign = Object.assign;
 exports.load = async(function*(req, res, next, id) {
   try {
     req.article = yield Article.load(id);
-    if (!req.article) return next(new Error('Article not found'));
+    if (!req.article) return next(new Error('未找到案件'));
   } catch (err) {
     return next(err);
   }
@@ -66,7 +66,9 @@ exports.new = function(req, res) {
  */
 
 exports.create = async(function*(req, res) {
-  const article = new Article(only(req.body, 'title body tags'));
+  //const article = new Article(only(req.body, 'title body tags'));
+  //const article = new Article(req.body);
+  const article = new Article(only(req.body, 'case_name clear_date create_date helper_name host_date host_name host_sign plan_money object_item body tags uid'));
   article.user = req.user;
   try {
     yield article.uploadAndSave(req.file);
@@ -87,7 +89,7 @@ exports.create = async(function*(req, res) {
 
 exports.edit = function(req, res) {
   res.render('articles/edit', {
-    title: '編輯 ' + req.article.title,
+    title: '編輯 ' + req.article.case_name,
     article: req.article
   });
 };
@@ -95,16 +97,17 @@ exports.edit = function(req, res) {
 /**
  * Update article
  */
-
 exports.update = async(function*(req, res) {
   const article = req.article;
-  assign(article, only(req.body, 'title body tags'));
+  //assign(article, only(req.body, 'title body tags'));
+  //no uid
+  assign(article, only(req.body, 'case_name clear_date create_date helper_name host_date host_name host_sign plan_money object_item body tags'));
   try {
     yield article.uploadAndSave(req.file);
     res.redirect(`/articles/${article._id}`);
   } catch (err) {
     res.status(422).render('articles/edit', {
-      title: '編輯 ' + article.title,
+      title: '編輯 ' + article.case_name,
       errors: [err.toString()],
       article
     });

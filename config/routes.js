@@ -37,7 +37,7 @@ module.exports = function(app, passport) {
     '/users/session',
     pauth('local', {
       failureRedirect: '/login',
-      failureFlash: 'Invalid email or password.'
+      failureFlash: '無效的帳號密碼'
     }),
     users.session
   );
