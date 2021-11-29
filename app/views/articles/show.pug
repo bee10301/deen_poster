@@ -8,40 +8,40 @@ block content
     .col-md-8
       .meta
         - if (article.uid)
-          - var name = article.uid ? article.uid : "未設定"
+          - var t_uid = article.uid ? article.uid : "未設定"
           p 流水號 :&nbsp;
-            a(href="/uid/"+article.uid)= name
+            a(href="/uid/"+article.uid)= t_uid
         - if (article.user)
-          - var name = article.user.name ? article.user.name : article.user.username
-          p 創建者 :&nbsp;
-            a(href="/users/"+article.user._id)= name
+          //- var name = article.user.name ? article.user.name : article.user.username
+          p 創建人 :&nbsp;
+            a(href="/users/"+article.user._id)= article.user.name ? article.user.name : article.user.username
         - if (article.create_date)
-          - var create_date = article.create_date ? article.create_date : "未設定"
+          //- var create_date = article.create_date ? article.create_date : "未設定"
+          -const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
           p 創建日 :&nbsp;
-            a= create_date
-        - if (article.uid)
-          - var name = article.user.name ? article.user.name : article.user.username
-          p 創建者 :&nbsp;
-            a(href="/users/"+article.user._id)= name
-        - if (article.uid)
-          - var name = article.user.name ? article.user.name : article.user.username
-          p 創建者 :&nbsp;
-            a(href="/users/"+article.user._id)= name
-        - if (article.uid)
-          - var name = article.user.name ? article.user.name : article.user.username
-          p 創建者 :&nbsp;
-            a(href="/users/"+article.user._id)= name
-        - if (article.uid)
-          - var name = article.user.name ? article.user.name : article.user.username
-          p 創建者 :&nbsp;
-            a(href="/users/"+article.user._id)= name
-
-        - if (article.tags)
-          p 標籤 &nbsp;
-            each tag in article.tags.split(',').slice(0, 10)
+            a=article.create_date.toLocaleDateString(undefined, options) ? article.create_date.toLocaleDateString(undefined, options) : "未設定"
+        - if (article.case_name)
+          p 案名 :&nbsp;
+            a=article.case_name
+        - if (article.host_name)
+          p 禮儀師 :&nbsp;
+            a(href="/users/"+article.host_name)=article.host_name
+        - if (article.helper_name)
+          p 禮助 : &nbsp;
+            each Helper in article.helper_name.split(',').slice(0, 10)
               i.text-muted.fa.fa-tag &nbsp;
-              a.tag(href="/tags/"+tag)= tag
+              a.Helper(href="/users/"+Helper)= Helper
               | &nbsp;&nbsp;
+        - if (article.host_date)
+          p 舉辦日 :&nbsp;
+            a(href="/date/"+article.host_date)= article.host_date.toLocaleDateString(undefined, options) ? article.host_date.toLocaleDateString(undefined, options) : "未設定"
+        
+        //- - if (article.tags)
+        //-   p 禮助 &nbsp;
+        //-     each tag in article.tags.split(',').slice(0, 10)
+        //-       i.text-muted.fa.fa-tag &nbsp;
+        //-       a.tag(href="/tags/"+tag)= tag
+        //-       | &nbsp;&nbsp;
         p=article.body.slice(0, 1000)
 
         p.text-muted= formatDate(article.create_date, "%b %d, %Y at %I:%M %p")
@@ -50,7 +50,7 @@ block content
       - if (!article.isNew && article.image && article.image.files && article.image.files.length)
         img(src=article.image.cdnUri + '/mini_' + article.image.files[0])
 
-  form(action="/articles/"+article.id, method="post" onsubmit="return confirm('確認執行 ?')")
+  form(action="/articles/"+article.id, method="post" onsubmit="return confirm('確認執行?')")
     input(type='hidden' name='_csrf', value=csrf_token)
     a.btn.btn-outline-primary(href='/articles/'+article._id+'/edit' title="edit") 編輯
     | &nbsp;

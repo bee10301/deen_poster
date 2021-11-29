@@ -26,7 +26,7 @@ exports.index = async(function*(req, res) {
   const count = yield Article.countDocuments(criteria);
 
   res.render('articles/index', {
-    title: 'Articles tagged ' + req.params.tag,
+    title: '查詢 ' + req.params.tag,
     articles: articles,
     page: page + 1,
     pages: Math.ceil(count / limit)

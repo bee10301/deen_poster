@@ -18,6 +18,11 @@ const setTags = tags => {
   if (!Array.isArray(tags)) return tags.split(',').slice(0, 10); // max tags
   return [];
 };
+const getHelper = Helper => Helper.join(',');
+const setHelper = Helper => {
+  if (!Array.isArray(Helper)) return Helper.split(',').slice(0, 10); // max tags
+  return [];
+};
 
 /**
  * Article Schema
@@ -67,8 +72,7 @@ const ArticleSchema = new Schema({
     required: true
   },
   helper_name: {
-    type: String,
-    //default: "未設定禮助"
+    type: [], get: getHelper, set: setHelper
   },
   host_date: {
     type: Date,
@@ -381,7 +385,7 @@ ArticleSchema.statics = {
 
   load: function (_id) {
     return this.findOne({ _id })
-      .populate('user', 'name email username')
+      .populate('user', 'name email username level')
       .populate('comments.user')
       .exec();
   },
@@ -398,7 +402,7 @@ ArticleSchema.statics = {
     const page = options.page || 0;
     const limit = options.limit || 30;
     return this.find(criteria)
-      .populate('user', 'name username')
+      .populate('user', 'name username level')
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip(limit * page)

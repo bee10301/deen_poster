@@ -4,7 +4,7 @@
  *  Generic require login routing middleware
  */
 
-exports.requiresLogin = function(req, res, next) {
+exports.requiresLogin = function (req, res, next) {
   if (req.isAuthenticated()) return next();
   if (req.method == 'GET') req.session.returnTo = req.originalUrl;
   res.redirect('/login');
@@ -15,9 +15,10 @@ exports.requiresLogin = function(req, res, next) {
  */
 
 exports.user = {
-  hasAuthorization: function(req, res, next) {
-    if (req.profile.id != req.user.id) {
-      req.flash('info', 'You are not authorized');
+  hasAuthorization: function (req, res, next) {
+    //if (req.profile.id != req.user.id) {
+    if (req.profile.user.level != ("admin" ||"Bee")) {
+      req.flash('info', '無權限執行');
       return res.redirect('/users/' + req.profile.id);
     }
     next();
@@ -29,9 +30,10 @@ exports.user = {
  */
 
 exports.article = {
-  hasAuthorization: function(req, res, next) {
-    if (req.article.user.id != req.user.id) {
-      req.flash('info', 'You are not authorized');
+  hasAuthorization: function (req, res, next) {
+    //if (req.article.user.id != req.user.id) {
+    if (req.article.user.level != ("admin" ||"Bee")) {
+      req.flash('info', '無權限執行' +req.article);
       return res.redirect('/articles/' + req.article.id);
     }
     next();
@@ -43,16 +45,19 @@ exports.article = {
  */
 
 exports.comment = {
-  hasAuthorization: function(req, res, next) {
+  hasAuthorization: function (req, res, next) {
     // if the current user is comment owner or article owner
     // give them authority to delete
-    if (
+    /*if (
       req.user.id === req.comment.user.id ||
       req.user.id === req.article.user.id
+    ) {*/
+    if (
+      req.user.level === ("admin" ||"Bee")
     ) {
       next();
     } else {
-      req.flash('info', 'You are not authorized');
+      req.flash('info', '無權限執行');
       res.redirect('/articles/' + req.article.id);
     }
   }

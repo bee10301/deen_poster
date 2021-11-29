@@ -16,7 +16,7 @@ exports.load = async(function*(req, res, next, _id) {
   const criteria = { _id };
   try {
     req.profile = yield User.load({ criteria });
-    if (!req.profile) return next(new Error('User not found'));
+    if (!req.profile) return next(new Error('無此使用者'));
   } catch (err) {
     return next(err);
   }
@@ -33,7 +33,7 @@ exports.create = async(function*(req, res) {
   try {
     yield user.save();
     req.logIn(user, err => {
-      if (err) req.flash('info', 'Sorry! We are not able to log you in!');
+      if (err) req.flash('info', '登入錯誤!');
       res.redirect('/');
     });
   } catch (err) {
@@ -42,7 +42,7 @@ exports.create = async(function*(req, res) {
     );
 
     res.render('users/signup', {
-      title: 'Sign up',
+      title: '註冊',
       errors,
       user
     });
@@ -75,7 +75,7 @@ exports.authCallback = login;
 
 exports.login = function(req, res) {
   res.render('users/login', {
-    title: 'Login'
+    title: '登入'
   });
 };
 
@@ -85,7 +85,7 @@ exports.login = function(req, res) {
 
 exports.signup = function(req, res) {
   res.render('users/signup', {
-    title: 'Sign up',
+    title: '註冊',
     user: new User()
   });
 };

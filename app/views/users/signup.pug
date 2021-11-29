@@ -5,18 +5,18 @@ block auth
     input(type="hidden", name="_csrf", value=csrf_token)
   
     .form-label-group
-      input#email.form-control(type='email' name='email' placeholder='Email address' required='' autofocus='' value=user.email)
-      label(for='email') Email address
+      input#email.form-control(type='email' name='email' placeholder='Email' required='' autofocus='' value=user.email)
+      label(for='email') Email
     .form-label-group
-      input#password.form-control(type='password' name='password' placeholder='Password' required='')
-      label(for='password') Password
+      input#password.form-control(type='password' name='password' placeholder='密碼' required='')
+      label(for='password') 密碼
     .form-label-group
-      input#name.form-control(type='text' name='name' placeholder='Full Name' required='' value=user.name)
-      label(for='name') Full Name
+      input#name.form-control(type='text' name='name' placeholder='全名' required='' value=user.name)
+      label(for='name') 全名
     .form-label-group
-      input#password.form-control(type='text' name='username' placeholder='Username' value=user.username)
-      label(for='username') Username
-    button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign up
+      input#password.form-control(type='text' name='username' placeholder='使用者名稱(可自訂)' value=user.username)
+      label(for='username') 使用者名稱(可自訂)
+    button.btn.btn-lg.btn-primary.btn-block(type='submit') 註冊
     .my-3.text-center
       | or 
-      a.show-signup(href="/login") Log in
+      a.show-signup(href="/login") 登入

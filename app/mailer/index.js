@@ -43,9 +43,9 @@ module.exports = {
 
     const obj = {
       to: author.email,
-      from: 'your@product.com',
-      subject: user.name + ' added a comment on your article ' + article.title,
-      alert: user.name + ' says: "' + options.comment,
+      from: 'your@case.com',
+      subject: user.name + '輸入註記' + article.title,
+      alert: user.name + ' : "' + options.comment,
       locals: {
         to: author.name,
         from: user.name,

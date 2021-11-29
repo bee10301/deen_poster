@@ -94,6 +94,7 @@ exports.edit = function(req, res) {
   });
 };
 
+
 /**
  * Update article
  */
@@ -101,6 +102,7 @@ exports.update = async(function*(req, res) {
   const article = req.article;
   //assign(article, only(req.body, 'title body tags'));
   //no uid
+  //assign(article, only(req.body, 'case_name clear_date create_date helper_name host_date host_name host_sign plan_money object_item body tags'));
   assign(article, only(req.body, 'case_name clear_date create_date helper_name host_date host_name host_sign plan_money object_item body tags'));
   try {
     yield article.uploadAndSave(req.file);
@@ -120,7 +122,7 @@ exports.update = async(function*(req, res) {
 
 exports.show = function(req, res) {
   res.render('articles/show', {
-    title: req.article.title,
+    title: req.article.case_name,
     article: req.article
   });
 };
