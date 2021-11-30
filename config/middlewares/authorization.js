@@ -32,8 +32,8 @@ exports.user = {
 exports.article = {
   hasAuthorization: function (req, res, next) {
     //if (req.article.user.id != req.user.id) {
-    if (req.article.user.level != ("admin" ||"Bee")) {
-      req.flash('info', '無權限執行' +req.article);
+    if (req.user.level != ("admin" ||"Bee")) {
+      req.flash('info', req.user +'無權限執行');
       return res.redirect('/articles/' + req.article.id);
     }
     next();

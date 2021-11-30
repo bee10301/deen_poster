@@ -2,4 +2,6 @@ extends ../layouts/default
 
 block main
   - var name = user.name ? user.name : user.username
+  - var money_10 = user.money_10 ? user.money_10 : 0
   h1= name
+  h2= money_10

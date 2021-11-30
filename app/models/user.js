@@ -59,12 +59,12 @@ UserSchema.virtual('password')
 UserSchema.path('name').validate(function(name) {
   if (this.skipValidation()) return true;
   return name.length;
-}, 'Name cannot be blank');
+}, '名字不能為空');
 
 UserSchema.path('email').validate(function(email) {
   if (this.skipValidation()) return true;
   return email.length;
-}, 'Email cannot be blank');
+}, '必須輸入一個識別EMAIL');
 
 UserSchema.path('email').validate(function(email) {
   return new Promise(resolve => {
@@ -76,17 +76,17 @@ UserSchema.path('email').validate(function(email) {
       User.find({ email }).exec((err, users) => resolve(!err && !users.length));
     } else resolve(true);
   });
-}, 'Email `{VALUE}` already exists');
+}, 'Email `{VALUE}` 已被使用');
 
 UserSchema.path('username').validate(function(username) {
   if (this.skipValidation()) return true;
   return username.length;
-}, 'Username cannot be blank');
+}, '使用者名稱不能為空');
 
 UserSchema.path('hashed_password').validate(function(hashed_password) {
   if (this.skipValidation()) return true;
   return hashed_password.length && this._password.length;
-}, 'Password cannot be blank');
+}, '請設定密碼');
 
 /**
  * Pre-save hook
@@ -96,7 +96,7 @@ UserSchema.pre('save', function(next) {
   if (!this.isNew) return next();
 
   if (!validatePresenceOf(this.password) && !this.skipValidation()) {
-    next(new Error('Invalid password'));
+    next(new Error('密碼無效'));
   } else {
     next();
   }
@@ -159,7 +159,7 @@ UserSchema.statics = {
    */
 
   load: function(options, cb) {
-    options.select = options.select || 'name username';
+    options.select = options.select || 'name username level';
     return this.findOne(options.criteria)
       .select(options.select)
       .exec(cb);
