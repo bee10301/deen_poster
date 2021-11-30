@@ -62,6 +62,11 @@ const ArticleSchema = new Schema({
     type: String,
     default: ""
   },
+  //案件人名身分證
+  case_name_id: {
+    type: String,
+    default: ""
+  },
   clear_date: {
     type: Date,
     default: () => new Date(+new Date() + 100 * 365 * 24 * 60 * 60 * 1000),
@@ -89,7 +94,39 @@ const ArticleSchema = new Schema({
   },
   plan_money: {
     type: Number,
-    default: 9876543210
+    default: 0
+  },
+  規費: {
+    type: Number,
+    default: 0
+  },
+  骨罐: {
+    type: Number,
+    default: 0
+  },
+  內膽: {
+    type: Number,
+    default: 0
+  },
+  實收稅金: {
+    type: Number,
+    default: 0
+  },
+  服務費: {
+    type: Number,
+    default: 0
+  },
+  其他金額: {
+    type: Number,
+    default: 0
+  },
+  非契約: {
+    type: Number,
+    default: 0
+  },
+  減項: {
+    type: Number,
+    default: 0
   },
   object_item: {
     接體: {
@@ -273,6 +310,32 @@ const ArticleSchema = new Schema({
       person: { type: Array, default: [] },
     },
 
+  },
+  object_addon: {
+    蓮花被: {
+      date: { type: Date, default: () => new Date(+new Date() + 98 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 0 },
+      person: { type: Array, default: [] },
+    },
+    接體: {
+      date: { type: Date, default: () => new Date(+new Date() + 98 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 0 },
+      person: { type: Array, default: [] },
+    },
+    推床: {
+      date: { type: Date, default: () => new Date(+new Date() + 98 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 0 },
+      person: { type: Array, default: [] },
+    },
+    禮助協案: {
+      date: { type: Date, default: () => new Date(+new Date() + 98 * 364 * 24 * 60 * 60 * 1000) },
+      count: { type: Number, default: 0 },
+      money: { type: Number, default: 0 },
+      person: { type: Array, default: [] },
+    },
   }
 });
 

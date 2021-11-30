@@ -20,6 +20,9 @@ block content
         .form-group
           label(for='uid') 流水號
           input.form-control#uid(type='text' name="uid", value=uid_date_temp, placeholder='流水號' readonly)
+        .form-group
+          label(for='case_name_id') 契約編號
+          input.form-control#case_name_id(type='text' name="case_name_id", value=article.case_name_id?article.case_name_id:'' placeholder='輸入契約號')
         
         -var create_date_temp = new Date();
         //-const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };

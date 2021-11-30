@@ -11,6 +11,8 @@ block content
           - var t_uid = article.uid ? article.uid : "未設定"
           p 流水號 :&nbsp;
             a(href="/uid/"+article.uid)= t_uid
+          p 契約號 :&nbsp;
+            a= article.case_name_id
         - if (article.user)
           //- var name = article.user.name ? article.user.name : article.user.username
           p 創建人 :&nbsp;
@@ -35,6 +37,49 @@ block content
         - if (article.host_date)
           p 舉辦日 :&nbsp;
             a(href="/date/"+article.host_date)= article.host_date.toLocaleDateString(undefined, options) ? article.host_date.toLocaleDateString(undefined, options) : "未設定"
+        .wrap
+        .container
+          //- ACCORDION BEGIN
+          #money_other
+            .card
+              .card-header
+                a.card-link(data-toggle='collapse', href='#collapseOne')
+                  | 費用細項
+              #collapseOne.collapse(data-parent='#money_other')
+                .card-body
+                    p 規費 :&nbsp;
+                        a=article.規費
+                    p 骨罐 :&nbsp;
+                        a=article.骨罐
+                    p 內膽 :&nbsp;
+                        a=article.內膽
+                    p 實收稅金 :&nbsp;
+                        a=article.實收稅金
+                    p 服務費 :&nbsp;
+                        a=article.服務費
+                    p 其他金額 :&nbsp;
+                        a=article.其他金額
+                    p 非契約(花籃) :&nbsp;
+                        a=article.非契約
+                    p 減項 :&nbsp;
+                        a=article.減項
+            //- .card
+            //-   .card-header
+            //-     a.collapsed.card-link(data-toggle='collapse', href='#collapseTwo')
+            //-       | Collapsible Group Item #2
+            //-   #collapseTwo.collapse.show(data-parent='#accordion')
+            //-     .card-body
+            //-       | Lorem ipsum..
+            //- .card
+            //-   .card-header
+            //-     a.collapsed.card-link(data-toggle='collapse', href='#collapseThree')
+            //-       | Collapsible Group Item #3
+            //-   #collapseThree.collapse(data-parent='#accordion')
+            //-     .card-body
+            //-       | Lorem ipsum..
+        //- ACCORDION END
+        
+        
         
         //- - if (article.tags)
         //-   p 禮助 &nbsp;
@@ -44,7 +89,8 @@ block content
         //-       | &nbsp;&nbsp;
         p=article.body.slice(0, 1000)
 
-        p.text-muted= formatDate(article.create_date, "%b %d, %Y at %I:%M %p")
+        //-p.text-muted= formatDate(article.create_date, "%b %d, %Y at %I:%M %p")
+        p.text-muted= '創'+(article.create_date.toLocaleDateString(undefined, options) ? article.create_date.toLocaleDateString(undefined, options) : "未設定")
 
     .col-md-4
       - if (!article.isNew && article.image && article.image.files && article.image.files.length)
