@@ -67,8 +67,8 @@ exports.new = function(req, res) {
 
 exports.create = async(function*(req, res) {
   //const article = new Article(only(req.body, 'title body tags'));
-  //const article = new Article(req.body);
-  const article = new Article(only(req.body, '骨罐 內膽 實收稅金 服務費 其他金額 非契約 減項 object_addon case_name_id 規費 case_name clear_date create_date helper_name host_date host_name host_sign plan_money object_item body tags uid'));
+  const article = new Article(req.body);
+  //const article = new Article(only(req.body, 'host_object object_addon case_name_id case_name clear_date create_date helper_name host_date object_item body tags uid'));
   article.user = req.user;
   try {
     yield article.uploadAndSave(req.file);
@@ -102,9 +102,8 @@ exports.update = async(function*(req, res) {
   const article = req.article;
   //assign(article, only(req.body, 'title body tags'));
   //no uid
-  //assign(article, only(req.body, 'case_name clear_date create_date helper_name host_date host_name host_sign plan_money object_item body tags'));
-  assign(article, only(req.body, '骨罐 內膽 實收稅金 服務費 其他金額 非契約 減項 object_addon case_name_id 規費 case_name clear_date create_date helper_name host_date host_name host_sign plan_money object_item body tags'));
-  //assign(article, req.body);
+  //assign(article, only(req.body, 'host_object object_addon case_name_id case_name clear_date create_date helper_name host_date object_item body tags'));
+  assign(article, req.body);
   try {
     yield article.uploadAndSave(req.file);
     res.redirect(`/articles/${article._id}`);

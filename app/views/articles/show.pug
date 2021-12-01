@@ -7,28 +7,28 @@ block content
   .row
     .col-md-8
       .meta
+        -const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         - if (article.uid)
           - var t_uid = article.uid ? article.uid : "未設定"
           p 流水號 :&nbsp;
             a(href="/uid/"+article.uid)= t_uid
           p 契約號 :&nbsp;
             a= article.case_name_id
-        - if (article.user)
+        - if (article.host_object.plan_money)
           //- var name = article.user.name ? article.user.name : article.user.username
-          p 創建人 :&nbsp;
-            a(href="/users/"+article.user._id)= article.user.name ? article.user.name : article.user.username
-        - if (article.create_date)
+          p 方案金額 :&nbsp;
+            a= article.host_object.plan_money ? article.host_object.plan_money : ""
+        //-- if (article.create_date)
           //- var create_date = article.create_date ? article.create_date : "未設定"
-          -const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
           p 創建日 :&nbsp;
             a=article.create_date.toLocaleDateString(undefined, options) ? article.create_date.toLocaleDateString(undefined, options) : "未設定"
-        - if (article.case_name)
+        //-- if (article.case_name)
           p 案名 :&nbsp;
             a=article.case_name
-        - if (article.host_name)
+        - if (article.host_object.host_name)
           p 禮儀師 :&nbsp;
-            a(href="/users/"+article.host_name)=article.host_name
-        - if (article.helper_name)
+            a(href="/users/"+article.host_object.host_name)=article.host_object.host_name
+        //-- if (article.helper_name)
           p 禮助 : &nbsp;
             each Helper in article.helper_name.split(',').slice(0, 10)
               i.text-muted.fa.fa-tag &nbsp;
@@ -43,26 +43,94 @@ block content
           #money_other
             .card
               .card-header
-                a.card-link(data-toggle='collapse', href='#collapseOne')
-                  | 費用細項
-              #collapseOne.collapse(data-parent='#money_other')
+                a.card-link(data-toggle='collapse', href='#collapse1')
+                  | 禮儀師細項
+              #collapse1.collapse(data-parent='#money_other')
                 .card-body
                     p 規費 :&nbsp;
-                        a=article.規費
+                        a=article.host_object.規費
                     p 骨罐 :&nbsp;
-                        a=article.骨罐
+                        a=article.host_object.骨罐
                     p 內膽 :&nbsp;
-                        a=article.內膽
+                        a=article.host_object.內膽
                     p 實收稅金 :&nbsp;
-                        a=article.實收稅金
+                        a=article.host_object.實收稅金
                     p 服務費 :&nbsp;
-                        a=article.服務費
+                        a=article.host_object.服務費
                     p 其他金額 :&nbsp;
-                        a=article.其他金額
+                        a=article.host_object.其他金額
                     p 非契約(花籃) :&nbsp;
-                        a=article.非契約
+                        a=article.host_object.非契約
                     p 減項 :&nbsp;
-                        a=article.減項
+                        a=article.host_object.減項
+            .card
+              .card-header
+                a.card-link(data-toggle='collapse', href='#collapse2')
+                  | 禮助細項
+              #collapse2.collapse(data-parent='#money_other')
+                .card-body
+                    p 接體 :&nbsp;
+                        a=article.object_item.接體.count==0 ? " - " :article.object_item.接體.money + " x " + article.object_item.接體.count + "  (  "+article.object_item.接體.person+"  )"
+                    p 引魂 :&nbsp;
+                        a=article.object_item.引魂.count==0 ? " - " :article.object_item.引魂.money + " x " + article.object_item.引魂.count + "  (  "+article.object_item.引魂.person+"  )"
+                    p 頭七 :&nbsp;
+                        a=article.object_item.頭七.count==0 ? " - " :article.object_item.頭七.money + " x " + article.object_item.頭七.count + "  (  "+article.object_item.頭七.person+"  )"
+                    p 二七 :&nbsp;
+                        a=article.object_item.二七.count==0 ? " - " :article.object_item.二七.money + " x " + article.object_item.二七.count + "  (  "+article.object_item.二七.person+"  )"
+                    p 三七 :&nbsp;
+                        a=article.object_item.三七.count==0 ? " - " :article.object_item.三七.money + " x " + article.object_item.三七.count + "  (  "+article.object_item.三七.person+"  )"
+                    p 四七 :&nbsp;
+                        a=article.object_item.四七.count==0 ? " - " :article.object_item.四七.money + " x " + article.object_item.四七.count + "  (  "+article.object_item.四七.person+"  )"
+                    p 五七 :&nbsp;
+                        a=article.object_item.五七.count==0 ? " - " :article.object_item.五七.money + " x " + article.object_item.五七.count + "  (  "+article.object_item.五七.person+"  )"
+                    p 六七 :&nbsp;
+                        a=article.object_item.六七.count==0 ? " - " :article.object_item.六七.money + " x " + article.object_item.六七.count + "  (  "+article.object_item.六七.person+"  )"
+                    p 滿七 :&nbsp;
+                        a=article.object_item.滿七.count==0 ? " - " :article.object_item.滿七.money + " x " + article.object_item.滿七.count + "  (  "+article.object_item.滿七.person+"  )"
+                    p 功德法事 :&nbsp;
+                        a=article.object_item.功德法事.count==0 ? " - " :article.object_item.功德法事.money + " x " + article.object_item.功德法事.count + "  (  "+article.object_item.功德法事.person+"  )"
+                    p 洗穿化殮 :&nbsp;
+                        a=article.object_item.洗穿化殮.count==0 ? " - " :article.object_item.洗穿化殮.money + " x " + article.object_item.洗穿化殮.count + "  (  "+article.object_item.洗穿化殮.person+"  )"
+                    p 洗穿化殮5K :&nbsp;
+                        a=article.object_item.洗穿化殮5K.count==0 ? " - " :article.object_item.洗穿化殮5K.money + " x " + article.object_item.洗穿化殮5K.count + "  (  "+article.object_item.洗穿化殮5K.person+"  )"
+                    p 大體SPA入殮_單人 :&nbsp;
+                        a=article.object_item.大體SPA入殮_單人.count==0 ? " - " :article.object_item.大體SPA入殮_單人.money + " x " + article.object_item.大體SPA入殮_單人.count + "  (  "+article.object_item.大體SPA入殮_單人.person+"  )"
+                    p 大體SPA入殮_雙人 :&nbsp;
+                        a=article.object_item.大體SPA入殮_雙人.count==0 ? " - " :article.object_item.大體SPA入殮_雙人.money + " x " + article.object_item.大體SPA入殮_雙人.count + "  (  "+article.object_item.大體SPA入殮_雙人.person+"  )"
+                    p 報殮3K :&nbsp;
+                        a=article.object_item.報殮3K.count==0 ? " - " :article.object_item.報殮3K.money + " x " + article.object_item.報殮3K.count + "  (  "+article.object_item.報殮3K.person+"  )"
+                    p 報殮4K :&nbsp;
+                        a=article.object_item.報殮4K.count==0 ? " - " :article.object_item.報殮4K.money + " x " + article.object_item.報殮4K.count + "  (  "+article.object_item.報殮4K.person+"  )"
+                    p 抬棺2K :&nbsp;
+                        a=article.object_item.抬棺2K.count==0 ? " - " :article.object_item.抬棺2K.money + " x " + article.object_item.抬棺2K.count + "  (  "+article.object_item.抬棺2K.person+"  )"
+                    p 抬棺4K :&nbsp;
+                        a=article.object_item.抬棺4K.count==0 ? " - " :article.object_item.抬棺4K.money + " x " + article.object_item.抬棺4K.count + "  (  "+article.object_item.抬棺4K.person+"  )"
+                    p 會場布置 :&nbsp;
+                        a=article.object_item.會場布置.count==0 ? " - " :article.object_item.會場布置.money + " x " + article.object_item.會場布置.count + "  (  "+article.object_item.會場布置.person+"  )"
+                    p 告別式 :&nbsp;
+                        a=article.object_item.告別式.count==0 ? " - " :article.object_item.告別式.money + " x " + article.object_item.告別式.count + "  (  "+article.object_item.告別式.person+"  )"
+                    p 靈車 :&nbsp;
+                        a=article.object_item.靈車.count==0 ? " - " :article.object_item.靈車.money + " x " + article.object_item.靈車.count + "  (  "+article.object_item.靈車.person+"  )"
+                    p 返主 :&nbsp;
+                        a=article.object_item.返主.count==0 ? " - " :article.object_item.返主.money + " x " + article.object_item.返主.count + "  (  "+article.object_item.返主.person+"  )"
+                    p 晉塔 :&nbsp;
+                        a=article.object_item.晉塔.count==0 ? " - " :article.object_item.晉塔.money + " x " + article.object_item.晉塔.count + "  (  "+article.object_item.晉塔.person+"  )"
+                    p 土葬上山 :&nbsp;
+                        a=article.object_item.土葬上山.count==0 ? " - " :article.object_item.土葬上山.money + " x " + article.object_item.土葬上山.count + "  (  "+article.object_item.土葬上山.person+"  )"
+                    p 起掘遷葬 :&nbsp;
+                        a=article.object_item.起掘遷葬.count==0 ? " - " :article.object_item.起掘遷葬.money + " x " + article.object_item.起掘遷葬.count + "  (  "+article.object_item.起掘遷葬.person+"  )"
+                    p 起掘遷葬晉塔 :&nbsp;
+                        a=article.object_item.起掘遷葬晉塔.count==0 ? " - " :article.object_item.起掘遷葬晉塔.money + " x " + article.object_item.起掘遷葬晉塔.count + "  (  "+article.object_item.起掘遷葬晉塔.person+"  )"
+                    p 德誼VIP安靈室 :&nbsp;
+                        a=article.object_item.德誼VIP安靈室.count==0 ? " - " :article.object_item.德誼VIP安靈室.money + " x " + article.object_item.德誼VIP安靈室.count + "  (  "+article.object_item.德誼VIP安靈室.person+"  )"
+                    p 職案獎金 :&nbsp;
+                        a=article.object_item.職案獎金.count==0 ? " - " :article.object_item.職案獎金.money + " x " + article.object_item.職案獎金.count + "  (  "+article.object_item.職案獎金.person+"  )"
+                    p 小孩出生死亡(未滿月) :&nbsp;
+                        a=article.object_item.小孩出生死亡_未滿月.count==0 ? " - " :article.object_item.小孩出生死亡_未滿月.money + " x " + article.object_item.小孩出生死亡_未滿月.count + "  (  "+article.object_item.小孩出生死亡_未滿月.person+"  )"
+                    p 小孩出生死亡(滿月) :&nbsp;
+                        a=article.object_item.小孩出生死亡_滿月.count==0 ? " - " :article.object_item.小孩出生死亡_滿月.money + " x " + article.object_item.小孩出生死亡_滿月.count + "  (  "+article.object_item.小孩出生死亡_滿月.person+"  )"
+
+
             //- .card
             //-   .card-header
             //-     a.collapsed.card-link(data-toggle='collapse', href='#collapseTwo')
@@ -90,7 +158,7 @@ block content
         p=article.body.slice(0, 1000)
 
         //-p.text-muted= formatDate(article.create_date, "%b %d, %Y at %I:%M %p")
-        p.text-muted= '創'+(article.create_date.toLocaleDateString(undefined, options) ? article.create_date.toLocaleDateString(undefined, options) : "未設定")
+        p.text-muted= (article.create_date.toLocaleDateString(undefined, options) ? article.create_date.toLocaleDateString(undefined, options) : "未設定")+' 由 ' +article.user.name+' 創建'
 
     .col-md-4
       - if (!article.isNew && article.image && article.image.files && article.image.files.length)

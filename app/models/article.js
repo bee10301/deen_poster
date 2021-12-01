@@ -84,49 +84,51 @@ const ArticleSchema = new Schema({
     default: () => new Date(+new Date() + 99 * 365 * 24 * 60 * 60 * 1000),
     required: true
   },
-  host_name: {
-    type: String,
-    //default: "未設定禮儀師"
-  },
-  host_sign: {
-    type: Boolean,
-    default: false
-  },
-  plan_money: {
-    type: Number,
-    default: 0
-  },
-  規費: {
-    type: Number,
-    default: 0
-  },
-  骨罐: {
-    type: Number,
-    default: 0
-  },
-  內膽: {
-    type: Number,
-    default: 0
-  },
-  實收稅金: {
-    type: Number,
-    default: 0
-  },
-  服務費: {
-    type: Number,
-    default: 0
-  },
-  其他金額: {
-    type: Number,
-    default: 0
-  },
-  非契約: {
-    type: Number,
-    default: 0
-  },
-  減項: {
-    type: Number,
-    default: 0
+  host_object: {
+    host_name: {
+      type: String,
+      default: "未設定禮儀師"
+    },
+    host_sign: {
+      type: Boolean,
+      default: false
+    },
+    plan_money: {
+      type: Number,
+      default: 0
+    },
+    規費: {
+      type: Number,
+      default: 0
+    },
+    骨罐: {
+      type: Number,
+      default: 0
+    },
+    內膽: {
+      type: Number,
+      default: 0
+    },
+    實收稅金: {
+      type: Number,
+      default: 0
+    },
+    服務費: {
+      type: Number,
+      default: 0
+    },
+    其他金額: {
+      type: Number,
+      default: 0
+    },
+    非契約: {
+      type: Number,
+      default: 0
+    },
+    減項: {
+      type: Number,
+      default: 0
+    },
   },
   object_item: {
     接體: {

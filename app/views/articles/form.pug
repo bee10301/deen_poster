@@ -28,7 +28,6 @@ block content
         //-const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         .form-group
           label(for='create_date') 建立時間
-          //input.form-control#create_date(type='text' name="create_date", value=article.create_date?article.create_date.toLocaleDateString(undefined, options):create_date_temp.toLocaleDateString(undefined, options) placeholder='建立時間' readonly)
           input.form-control#create_date(type='date' name="create_date", value=article.create_date?article.create_date.getFullYear()+'-' + ("0"+(article.create_date.getMonth()+1)).slice(-2) + '-'+ ("0"+(article.create_date.getDate())).slice(-2):create_date_temp.getFullYear()+'-' + ("0"+(create_date_temp.getMonth()+1)).slice(-2) + '-'+("0"+(create_date_temp.getDate())).slice(-2) placeholder='建立時間' readonly)
         .form-group
           label(for='case_name') 案件名
@@ -40,7 +39,44 @@ block content
           label(for='host_name') 禮儀師
           input.form-control#host_name(type='text' name="host_name", value=article.host_name?article.host_name:'' placeholder='禮儀師')
 
-        .form-group
+        //-.form-group
+          label(for='host_object.plan_money') 方案金額
+          input.form-control#host_object(type='text' name="host_object", value=article.host_object.plan_money?article.host_object.plan_money:'' placeholder='輸入金額')
+        //-.form-group
+          label(for='host_object.host_name') 禮儀師
+          input.form-control#host_object(type='text' name="host_object2", value=article.host_object.host_name?article.host_object.host_name:'' placeholder='禮儀師')
+        
+        //-.form-group
+          .container
+          //- ACCORDION BEGIN
+          #host_object
+            .card
+              .card-header
+                a.card-link(data-toggle='collapse', href='#collapse1')
+                  | 禮儀師細項
+              #collapse1.collapse(data-parent='#host_object')
+                .card-body
+                    p 規費 :&nbsp;
+                        label(for='host_object.plan_money') 
+                        input.form-control#host_object_money(type='text' name="host_object_money", value=article.host_object.plan_money?article.host_object.plan_money:'' placeholder='方案費用')
+            //-         p 骨罐 :&nbsp;
+            //-             a=article.host_object.骨罐
+            //-         p 內膽 :&nbsp;
+            //-             a=article.host_object.內膽
+            //-         p 實收稅金 :&nbsp;
+            //-             a=article.host_object.實收稅金
+            //-         p 服務費 :&nbsp;
+            //-             a=article.host_object.服務費
+            //-         p 其他金額 :&nbsp;
+            //-             a=article.host_object.其他金額
+            //-         p 非契約(花籃) :&nbsp;
+            //-             a=article.host_object.非契約
+            //-         p 減項 :&nbsp;
+            //-             a=article.host_object.減項
+            //- input.form-control#host_name(type='text' name="host_name", value=article.host_object.host_name?article.host_object.host_name:'' placeholder='禮儀師')
+            //- input.form-control#host_name(type='text' name="host_name", value=article.host_object.host_name?article.host_object.host_name:'' placeholder='禮儀師')
+
+        //-.form-group
           label(for='helper_name') 禮助
           input.form-control#tags(type='text' name="helper_name", value=article.helper_name?article.helper_name:null placeholder='禮助名')
         
@@ -54,7 +90,7 @@ block content
           input.form-control#clear_date(type='date' name="clear_date", value=article.clear_date?article.clear_date.getFullYear()+'-' + ("0"+(article.clear_date.getMonth()+1)).slice(-2) + '-'+ ("0"+(article.clear_date.getDate())).slice(-2):create_date_temp.getFullYear()+'-' + ("0"+(create_date_temp.getMonth()+1)).slice(-2) + '-'+("0"+(create_date_temp.getDate())).slice(-2) placeholder='結案時間')
 
 
-        //.getFullYear()+'-' + (.getMonth()+1) + '-'+.getDate()
+        //-.getFullYear()+'-' + (.getMonth()+1) + '-'+.getDate()
         //- .form-group
         //-   label(for='file') Image
         //-   input.form-control-file#file(type='file' name="image")
