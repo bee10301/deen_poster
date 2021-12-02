@@ -71,7 +71,7 @@ exports.create = async(function*(req, res) {
   //const article = new Article(only(req.body, 'host_object object_addon case_name_id case_name clear_date create_date helper_name host_date object_item body tags uid'));
   article.user = req.user;
   try {
-    yield article.uploadAndSave(req.file);
+    yield article.uploadAndSave(req.file);    
     req.flash('success', '案件創建成功');
     res.redirect(`/articles/${article._id}`);
   } catch (err) {
@@ -99,10 +99,12 @@ exports.edit = function(req, res) {
  * Update article
  */
 exports.update = async(function*(req, res) {
-  const article = req.article;
+  let article = req.article;
   //assign(article, only(req.body, 'title body tags'));
   //no uid
   //assign(article, only(req.body, 'host_object object_addon case_name_id case_name clear_date create_date helper_name host_date object_item body tags'));
+  article.host_object.host_name = req.body.host_name;
+  article.host_object.host_name = req.body.plan_money;
   assign(article, req.body);
   try {
     yield article.uploadAndSave(req.file);
